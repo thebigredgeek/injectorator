@@ -1,0 +1,45 @@
+{
+  "name": "injectorator",
+  "version": "1.0.0",
+  "description": "Minimial dependency injection library for NodeJS and the Browser",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thebigredgeek/injectorator.git"
+  },
+  "keywords": [
+    "di",
+    "dependency",
+    "injection",
+    "test",
+    "testing",
+    "nodejs",
+    "browser",
+    "client",
+    "server"
+  ],
+  "author": "Andrew E. Rhyne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thebigredgeek/injectorator/issues"
+  },
+  "homepage": "https://github.com/thebigredgeek/injectorator#readme",
+  "dependencies": {
+    "es6-error": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.17.0",
+    "babel-eslint": "^7.0.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.8.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "mocha": "^3.1.2",
+    "rimraf": "^2.5.4"
+  }
+}
