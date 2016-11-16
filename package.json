@@ -1,6 +1,6 @@
 {
   "name": "injectorator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Minimial dependency injection library for NodeJS and the Browser",
   "main": "dist/index.js",
   "scripts": {
