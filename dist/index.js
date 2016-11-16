@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -30,30 +30,24 @@ var hoistStatics = function hoistStatics(target, source) {
 var parseInjectionMap = exports.parseInjectionMap = function parseInjectionMap(map) {
   var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   return Object.keys(map).reduce(function (map, key) {
-    return Object.assign(map, _defineProperty({}, key, typeof map[key] === 'function' ? map[key].apply(null, args) : map[key]));
+    return Object.assign({}, map, _defineProperty({}, key, typeof map[key] === 'function' ? map[key].apply(null, args) : map[key]));
   }, map);
 };
 
 var inject = exports.inject = function inject() {
   var injectionMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return function (WrappedClass) {
-    var InjectDecoratedClass = function InjectDecoratedClass() {
-      _classCallCheck(this, InjectDecoratedClass);
-
+    function InjectDecoratedClass() {
       var depMap = parseInjectionMap(InjectDecoratedClass.injectionMap, arguments);
-      var instance = Object.create(InjectDecoratedClass.wrappedClass.prototype);
       var parsedArguments = Array.prototype.concat.call([depMap], Array.prototype.slice.call(arguments));
-      InjectDecoratedClass.wrappedClass.apply(instance, parsedArguments);
-      return instance;
-    };
+      return new (Function.prototype.bind.apply(InjectDecoratedClass.wrappedClass, [null].concat(_toConsumableArray(parsedArguments))))();
+    }
 
     InjectDecoratedClass.withDependencies = function () {
       var args = Array.prototype.slice.call(arguments, 1) || [];
       var depMap = parseInjectionMap(arguments[0], args);
-      var instance = Object.create(InjectDecoratedClass.wrappedClass.prototype);
       var parsedArguments = Array.prototype.concat.call([depMap], Array.prototype.slice.call(args));
-      InjectDecoratedClass.wrappedClass.apply(instance, parsedArguments);
-      return instance;
+      return new (Function.prototype.bind.apply(InjectDecoratedClass.wrappedClass, [null].concat(_toConsumableArray(parsedArguments))))();
     };
 
     InjectDecoratedClass.injectionMap = injectionMap;

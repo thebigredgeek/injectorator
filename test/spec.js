@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { inject } from '../src/index';
+import { inject } from '../dist/index';
 
 class FakeClass {
   constructor (dependencies, name) {

@@ -19,30 +19,24 @@ const hoistStatics = (target, source) => Object
 
 export const parseInjectionMap = (map, args = []) => Object
   .keys(map)
-  .reduce((map, key) => Object.assign(
+  .reduce((map, key) => Object.assign({},
     map, {
       [key]: typeof map[key] === 'function' ? map[key].apply(null, args) : map[key]
     }
   ), map);
 
 export const inject = (injectionMap = {}) => WrappedClass => {
-  class InjectDecoratedClass {
-    constructor () {
-      const depMap = parseInjectionMap(InjectDecoratedClass.injectionMap, arguments);
-      const instance = Object.create(InjectDecoratedClass.wrappedClass.prototype);
-      const parsedArguments = Array.prototype.concat.call([depMap], Array.prototype.slice.call(arguments));
-      InjectDecoratedClass.wrappedClass.apply(instance, parsedArguments);
-      return instance;
-    }
+  function InjectDecoratedClass () {
+    const depMap = parseInjectionMap(InjectDecoratedClass.injectionMap, arguments);
+    const parsedArguments = Array.prototype.concat.call([depMap], Array.prototype.slice.call(arguments));
+    return new InjectDecoratedClass.wrappedClass(...parsedArguments);
   }
 
   InjectDecoratedClass.withDependencies = function () {
     const args = Array.prototype.slice.call(arguments, 1) || [];
     const depMap = parseInjectionMap(arguments[0], args);
-    const instance = Object.create(InjectDecoratedClass.wrappedClass.prototype);
     const parsedArguments = Array.prototype.concat.call([depMap], Array.prototype.slice.call(args));
-    InjectDecoratedClass.wrappedClass.apply(instance, parsedArguments);
-    return instance;
+    return new InjectDecoratedClass.wrappedClass(...parsedArguments);
   };
 
   InjectDecoratedClass.injectionMap = injectionMap;
